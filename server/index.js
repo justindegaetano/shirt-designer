@@ -4,7 +4,11 @@ import cors from 'cors';
 
 import dalleRoutes from './routes/dalle.routes.js';
 
+import { AbortController } from 'abort-controller';
+
 dotenv.config();
+
+const controller = new AbortController();
 
 const app = express();
 app.use(cors());
