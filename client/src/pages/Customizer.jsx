@@ -11,41 +11,45 @@ import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
 const Customizer = () => {
+  // Use the useSnapshot hook to get the current state from Valtio
   const snap = useSnapshot(state);
 
+  // Initialize state variables
   const [file, setFile] = useState('');
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
 
+  // Initialize state variables for active editor and filter tabs
   const [activeEditorTab, setActiveEditorTab] = useState('');
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShift: false,
   });
 
-  // show activeTab content
+  // Function to generate the content of the active editor tab
   const generateTabContent = () => {
     switch (activeEditorTab) {
       case "colorpicker":
-        return <ColorPicker />
+        return <ColorPicker />;
       case "filepicker":
-        return <FilePicker 
+        return <FilePicker
           file={file}
           setFile={setFile}
           readFile={readFile}
-        />
+        />;
       case "aipicker":
-        return <AIPicker 
+        return <AIPicker
           prompt={prompt}
           setPrompt={setPrompt}
           generatingImg={generatingImg}
           handleSubmit={handleSubmit}
-        />
+        />;
       default:
         return null;
     }
   }
 
+  // Function to handle the submission of AI-generated content
   const handleSubmit = async (type) => {
     if (!prompt) return alert('Please enter a prompt');
     try {
@@ -66,10 +70,11 @@ const Customizer = () => {
         alert(e)
     } finally {
         setGeneratingImg(false);
-        setActiveEditorTab(''); //
+        setActiveEditorTab('');
     }
   }
 
+  // Function to handle the selection of decals and update the state
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
 
@@ -80,6 +85,7 @@ const Customizer = () => {
     }
   }
 
+  // Function to handle the selection of active filter tabs
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt":
@@ -91,10 +97,11 @@ const Customizer = () => {
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
+        break;
     }
 
-    //after setting state, update activeFilterTab
-    setActiveEditorTab((prevState) => {
+    // After setting state, update activeFilterTab
+    setActiveFilterTab((prevState) => {
       return {
         ...prevState,
         [tabName]: !prevState[tabName]
@@ -102,6 +109,7 @@ const Customizer = () => {
     })
   }
 
+  // Function to read a selected file and handle decals
   const readFile = (type) => {
     reader(file)
       .then((result) => {
@@ -121,6 +129,7 @@ const Customizer = () => {
           >
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs">
+                {/* Render editor tabs */}
                 {EditorTabs.map((tab) => (
                   <Tab 
                     key={tab.name}
@@ -138,6 +147,7 @@ const Customizer = () => {
             className='absolute z-10 top-5 right-5'
             {...fadeAnimation}
           >
+            {/* Render a "Go Back" button */}
             <CustomButton
               type='filled'
               title='Go Back'
@@ -150,6 +160,7 @@ const Customizer = () => {
             className='filtertabs-container'
             {...slideAnimation('up')}
           >
+            {/* Render filter tabs */}
             {FilterTabs.map((tab) =>
               <Tab 
                 key={tab.name}
@@ -166,4 +177,4 @@ const Customizer = () => {
   )
 }
 
-export default Customizer
+export default Customizer;

@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
 
+// Import the CustomButton component
 import CustomButton from './CustomButton';
 
+// Define the AIPicker component
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   return (
     <div className='aipicker-container'>
+      {/* Textarea for entering AI prompts */}
       <textarea 
         className='aipicker-textarea'
         placeholder='Ask AI...'
@@ -14,12 +17,14 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
       />
       <div className="flex flex-wrap gap-3">
         {generatingImg ? (
+          // Render a button when generating an image
           <CustomButton 
-          type='outline'
-          title="Asking AI..."
-          customStyles='text-xs'
+            type='outline'
+            title="Asking AI..."
+            customStyles='text-xs'
           />
         ) : (
+          // Render buttons for choosing AI logo or AI full image
           <>
             <CustomButton 
               type='outline'
@@ -40,4 +45,4 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   )
 }
 
-export default AIPicker
+export default AIPicker;
