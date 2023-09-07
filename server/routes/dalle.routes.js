@@ -6,8 +6,6 @@ dotenv.config();
 
 const router = express.Router();
 
-const controller = new AbortController();
-
 // Initialize the OpenAI instance with your API key from environment variables
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
